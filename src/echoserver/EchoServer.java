@@ -41,6 +41,7 @@ public class EchoServer {
   }
 
   public static void main(String[] args) {
+      
     int port = Integer.parseInt(properties.getProperty("port"));
     String ip = properties.getProperty("serverIp");
     String logFile = properties.getProperty("logFile");
@@ -56,8 +57,7 @@ public class EchoServer {
       } while (keepRunning);
     } catch (IOException ex) {
       Logger.getLogger(EchoServer.class.getName()).log(Level.SEVERE, null, ex);
-    }finally{
-      Utils.closeLogger(EchoServer.class.getName());
     }
+    Utils.closeLogger(EchoServer.class.getName());
   }
 }
