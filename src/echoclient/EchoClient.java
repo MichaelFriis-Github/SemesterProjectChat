@@ -47,18 +47,22 @@ public class EchoClient extends Thread {
         output.println(ProtocolStrings.STOP);
     }
 
-  public String receive()
-  {
-    String msg = input.nextLine();
-    if(msg.equals(ProtocolStrings.STOP)){
-      try {
-        socket.close();
-      } catch (IOException ex) {
-        Logger.getLogger(EchoClient.class.getName()).log(Level.SEVERE, null, ex);
-      }
+    public String receive() {
+        String msg = input.nextLine();
+
+        while (!msg.equals(ProtocolStrings.STOP)) {
+            notifyListeners(msg);
+            msg = input.nextLine();
+        }
+
+        try {
+            socket.close();
+        } catch (IOException ex) {
+            Logger.getLogger(EchoClient.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return msg;
     }
-    return msg;
-  }
+
     public void registerEchoListener(EchoListener l) {
         listeners.add(l);
     }
@@ -102,7 +106,7 @@ public class EchoClient extends Thread {
             client.start();
             client.connect(ip, port);
 
-     // tester.registerEchoListener(tester);
+            // tester.registerEchoListener(tester);
 //      System.out.println("Sending 'Hello world'");
 //      tester.send("Hello World");
 //      System.out.println("Waiting for a reply");

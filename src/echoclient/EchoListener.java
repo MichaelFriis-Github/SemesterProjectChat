@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package echoclient;
 
 /**
@@ -11,10 +10,7 @@ package echoclient;
  * @author Michael
  */
 public interface EchoListener {
-    
-    
 
     public void messageArrived(String Data);
-    
-    
+
 }

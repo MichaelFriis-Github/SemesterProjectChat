@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Gui;
 
 import echoclient.EchoClient;
@@ -21,17 +20,17 @@ public class gui extends javax.swing.JFrame {
 
     EchoClient ec = new EchoClient();
     String msg;
-    
+
     /**
      * Creates new form gui
      */
     public gui() {
         initComponents();
-        
+
         try {
-            
+
             ec.connect("localhost", 9090);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(gui.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -123,17 +122,17 @@ public class gui extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         String username = jTextFieldusername.getText();
-        jTextArea1.append(username+": "+jTextField1.getText()+"\n");
-        
-        jTextArea1.append(ec.receive());
-        
+        jTextArea1.append(username + ": " + jTextField1.getText() + "\n");
+
         String online = Integer.toString(ec.getOnline());
-        
+
         ec.send(jTextField1.getText());
-        
+
+        jTextArea1.append(ec.receive());
+
         COlabel.setText(online);
-       
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -144,7 +143,7 @@ public class gui extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -169,14 +168,13 @@ public class gui extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new gui().setVisible(true);
-                
+
             }
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
