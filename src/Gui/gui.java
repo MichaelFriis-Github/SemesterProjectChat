@@ -20,8 +20,6 @@ import java.util.logging.Logger;
 public class gui extends javax.swing.JFrame {
 
     EchoClient ec = new EchoClient();
-    Thread thread = new Thread(new EchoClient());
-    String online = "1";
     String msg;
     
     /**
@@ -127,7 +125,7 @@ public class gui extends javax.swing.JFrame {
         String username = jTextFieldusername.getText();
         jTextArea1.append(username+": "+jTextField1.getText()+"\n");
         
-        //jTextArea1.append(ec.receive());
+        jTextArea1.append(ec.receive());
         
         String online = Integer.toString(ec.getOnline());
         
