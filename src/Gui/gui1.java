@@ -7,8 +7,6 @@
 package Gui;
 
 import echoclient.EchoClient;
-import echoclient.EchoListener;
-import echoserver.EchoServer;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,25 +15,22 @@ import java.util.logging.Logger;
  *
  * @author Michael
  */
-public class gui extends javax.swing.JFrame {
+public class gui1 extends javax.swing.JFrame {
 
     EchoClient ec = new EchoClient();
-    Thread thread = new Thread(new EchoClient());
-    String online = "1";
-    String msg;
+
     
     /**
      * Creates new form gui
      */
-    public gui() {
+    public gui1() {
         initComponents();
-        
         try {
             
             ec.connect("localhost", 9090);
             
         } catch (IOException ex) {
-            Logger.getLogger(gui.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(gui1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -54,7 +49,6 @@ public class gui extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         COlabel = new javax.swing.JLabel();
-        jTextFieldusername = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,8 +71,6 @@ public class gui extends javax.swing.JFrame {
 
         jLabel1.setText("Clients online:");
 
-        jTextFieldusername.setText("Enter Username");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -90,9 +82,7 @@ public class gui extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 282, Short.MAX_VALUE)
                             .addComponent(jTextField1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldusername, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                        .addContainerGap())
+                        .addContainerGap(108, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -105,9 +95,7 @@ public class gui extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldusername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
@@ -124,17 +112,15 @@ public class gui extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        String username = jTextFieldusername.getText();
-        jTextArea1.append(username+": "+jTextField1.getText()+"\n");
+     jTextArea1.append(jTextField1.getText());
         
-        //jTextArea1.append(ec.receive());
+        jTextArea1.append(ec.receive());
         
         String online = Integer.toString(ec.getOnline());
         
         ec.send(jTextField1.getText());
         
         COlabel.setText(online);
-       
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -146,7 +132,7 @@ public class gui extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+        ;
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -160,13 +146,13 @@ public class gui extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(gui1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(gui1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(gui1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(gui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(gui1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -174,7 +160,7 @@ public class gui extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new gui().setVisible(true);
+                new gui1().setVisible(true);
                 
             }
         });
@@ -188,6 +174,5 @@ public class gui extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextFieldusername;
     // End of variables declaration//GEN-END:variables
 }

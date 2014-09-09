@@ -18,6 +18,15 @@ public class EchoServer {
   private static boolean keepRunning = true;
   private static ServerSocket serverSocket;
   private static final Properties properties = Utils.initProperties("server.properties");
+  static int online = 0;
+
+    public int getOnline() {
+        return online;
+    }
+
+  
+
+  
  
 
   public static void stopServer() {
@@ -25,6 +34,7 @@ public class EchoServer {
   }
 
   private static void handleClient(Socket socket) throws IOException {
+    
     Scanner input = new Scanner(socket.getInputStream());
     PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 
@@ -32,6 +42,7 @@ public class EchoServer {
     Logger.getLogger(EchoServer.class.getName()).log(Level.INFO, String.format("Received the message: %1$S ",message));
     while (!message.equals(ProtocolStrings.STOP)) {
       writer.println(message.toUpperCase());
+        System.out.println(message);
       Logger.getLogger(EchoServer.class.getName()).log(Level.INFO, String.format("Received the message: %1$S ",message.toUpperCase()));
       message = input.nextLine(); //IMPORTANT blocking call
     }
@@ -40,8 +51,8 @@ public class EchoServer {
     Logger.getLogger(EchoServer.class.getName()).log(Level.INFO, "Closed a Connection");
   }
 
-  public static void main(String[] args) {
-      
+    public static void main(String[] args) {
+  
     int port = Integer.parseInt(properties.getProperty("port"));
     String ip = properties.getProperty("serverIp");
     String logFile = properties.getProperty("logFile");
@@ -52,6 +63,7 @@ public class EchoServer {
       serverSocket.bind(new InetSocketAddress(ip, port));
       do {
         Socket socket = serverSocket.accept(); //Important Blocking call
+        online++;
         Logger.getLogger(EchoServer.class.getName()).log(Level.INFO, "Connected to a client");        
         handleClient(socket);
       } while (keepRunning);
@@ -60,4 +72,7 @@ public class EchoServer {
     }
     Utils.closeLogger(EchoServer.class.getName());
   }
+
+  
+    
 }

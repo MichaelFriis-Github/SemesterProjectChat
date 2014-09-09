@@ -1,5 +1,6 @@
 package echoclient;
 
+import echoserver.EchoServer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
@@ -12,21 +13,24 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import shared.ProtocolStrings;
 
-public class EchoClient implements Runnable
+public class EchoClient extends Thread
 {
   Socket socket;
   private int port;
   private InetAddress serverAddress;
   private Scanner input;
   private PrintWriter output;
-   EchoListener el = new EchoListener() {
+  static int online;
+  EchoListener el = new EchoListener()
+          
+  {
 
       @Override
       public void messageArrived(String Data) {
           throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
       }
   };
-  List<EchoListener> listeners = new ArrayList();
+ static  List<EchoListener> listeners = new ArrayList();
   
   
   public void connect(String address, int port) throws UnknownHostException, IOException
@@ -36,6 +40,7 @@ public class EchoClient implements Runnable
     socket = new Socket(serverAddress, port);
     input = new Scanner(socket.getInputStream());
     output = new PrintWriter(socket.getOutputStream(), true);  //Set to true, to get auto flush behaviour
+    start(); //Starting the thread.
   }
   
   public void send(String msg)
@@ -43,7 +48,8 @@ public class EchoClient implements Runnable
     output.println(msg);
   }
   
-  public void stop() throws IOException{
+  
+  public void stopp() throws IOException{
     output.println(ProtocolStrings.STOP);
   }
   
@@ -79,7 +85,9 @@ public class EchoClient implements Runnable
   
   public void run()
   {
+      
       String msg = input.nextLine();
+      
       while (!msg.equals(ProtocolStrings.STOP))
       {
           notifyListeners(msg);
@@ -97,6 +105,7 @@ public class EchoClient implements Runnable
   {   
     int port = 9090;
     String ip = "localhost";
+    
     if(args.length == 2){
       port = Integer.parseInt(args[0]);
       ip = args[1];
@@ -104,6 +113,12 @@ public class EchoClient implements Runnable
     try {
       EchoClient tester = new EchoClient();      
       tester.connect(ip, port);
+      
+      
+      
+              
+              
+     // tester.registerEchoListener(tester);
 //      System.out.println("Sending 'Hello world'");
 //      tester.send("Hello World");
 //      System.out.println("Waiting for a reply");
@@ -119,6 +134,10 @@ public class EchoClient implements Runnable
       Logger.getLogger(EchoClient.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
+
+    public int getOnline() {
+        return online;
+    }
 
    
 }
